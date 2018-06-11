@@ -1,4 +1,11 @@
-﻿/// <reference path="jquery.js" />
+﻿/*
+     Author name: Piyush Sehli
+    Student Number: 300984528   
+    Date: 11-06-2018
+    Description: this game is about slot machine which has three reels.
+*/
+
+/// <reference path="jquery.js" />
 var playerMoney = 1000;
 var winnings = 0;
 var jackpot = 5000;
@@ -91,7 +98,7 @@ function resetFruitTally() {
     img6 = 0;
 }
 function quit(){
-    
+
 }
 /* Utility function to reset the player stats */
 function resetAll() {

@@ -1,4 +1,10 @@
-﻿ul#playerStats {
+﻿/*
+	 Author name: Piyush Sehli
+    Student Number: 300984528   
+    Date: 11-06-2018
+    Description: this game is about slot machine which has three reels.
+*/
+ul#playerStats {
     list-style-type: none;
     padding: 0;
     margin: 5px;
