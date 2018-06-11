@@ -1,12 +1,28 @@
-﻿<!DOCTYPE html>
+﻿<!-- 
+    Author name: Piyush Sehli
+    Student Number: 300984528   
+    Date: 11-06-2018
+    Description: this game is about slot machine which has three reels.
+
+ -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Slot Machine</title>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/easeljs-0.7.1.min.js"></script>
+    <script src="js/tweenjs-0.5.1.min.js"></script>        
+    <script src="js/soundjs-0.5.2.min.js"></script>
+    <script src="js/preloadjs-0.4.1.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+
     <!-- CSS Section -->
     <link href="css/main.css" rel="stylesheet" />
 </head>
-<body>
+<body onload="init()">
     <div>
         <h1>Slot Machine</h1>
         <div>
@@ -31,13 +47,18 @@
         </div>
 
 
-        <button id="spinButton">Spin!</button>
+        <button id="spinButton" class="" onclick="spinButton()">Spin!</button>        
+        <button id="resetButton" class="" onclick="resetAll()">Reset!</button>        
+        <button id="quitButton" class="" onclick="quit()">Quit!</button>        
     </div>
 
     <div id="result">
         <h2>Spin Result</h2>
         <hr />
         <p></p>
+        <canvas id="canvas" class="inline-svg" width="540" height="140">
+            
+        </canvas>
     </div>
     <hr />
     <div id="winOrLose">
@@ -46,7 +67,6 @@
 
 
     <!-- JavaScript Section -->
-    <script src="js/jquery.js"></script>
-    <script src="js/main.js"></script>
+    
 </body>
 </html>

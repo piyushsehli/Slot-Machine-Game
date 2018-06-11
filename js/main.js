@@ -9,14 +9,65 @@ var lossNumber = 0;
 var spinResult;
 var fruits = "";
 var winRatio = 0;
-var grapes = 0;
-var bananas = 0;
-var oranges = 0;
-var cherries = 0;
-var bars = 0;
-var bells = 0;
-var sevens = 0;
+var img1 = 0;
+var img2 = 0;
+var img3 = 0;
+var img4 = 0;
+var img5 = 0;
+var img6 = 0;
+/*var sevens = 0;*/
 var blanks = 0;
+
+ var i, sound, reel ,result;
+ var queue;
+ var stage;
+//array of images
+var imgData = [
+        {id:"img1", src:"img/reel-icon-1.png"},
+        {id:"img2", src:"img/reel-icon-2.png"},
+        {id:"img3", src:"img/reel-icon-3.png"},
+        {id:"img4", src:"img/reel-icon-4.png"},
+        {id:"img5", src:"img/reel-icon-5.png"},
+        {id:"img6", src:"img/reel-icon-6.png"}
+    ];
+
+//init function
+function init() {
+    console.log("init");
+    queue = new createjs.LoadQueue();
+    queue.installPlugin(createjs.Sound);
+    queue.addEventListener("complete", loadComplete);
+    queue.loadManifest([   
+        {id:"woosh", src:"sounds/coin.mp3"} 
+    ]);
+}
+
+function loadComplete() {
+    console.log("loadcomplete");
+   setupStage();
+}
+
+function setupStage() {
+    console.log("setupStage");
+    stage = new createjs.Stage(document.getElementById('canvas'));
+    createjs.Ticker.setFPS(60);
+    createjs.Ticker.addEventListener("tick", function(){
+        stage.update();
+    });
+}
+ /*function handleTick(e) {
+        stage.update();
+    }
+*/
+/*function reelComplete(){
+    stage.removeChild(this);
+    if(!stage.getNumChildren()){
+        
+    }
+}*/
+function handleTick(e) {
+    stage.update();
+}
 
 /* Utility function to show Player Stats */
 function showPlayerStats()
@@ -32,16 +83,16 @@ function showPlayerStats()
 
 /* Utility function to reset all fruit tallies */
 function resetFruitTally() {
-    grapes = 0;
-    bananas = 0;
-    oranges = 0;
-    cherries = 0;
-    bars = 0;
-    bells = 0;
-    sevens = 0;
-    blanks = 0;
+    img1 = 0;
+    img2 = 0;
+    img3 = 0;
+    img4 = 0;
+    img5 = 0;
+    img6 = 0;
 }
-
+function quit(){
+    
+}
 /* Utility function to reset the player stats */
 function resetAll() {
     playerMoney = 1000;
@@ -96,46 +147,42 @@ function checkRange(value, lowerBounds, upperBounds) {
 /* When this function is called it determines the betLine results.
 e.g. Bar - Orange - Banana */
 function Reels() {
-    var betLine = [" ", " ", " "];
+    var betLine = [];
     var outCome = [0, 0, 0];
-
+   
     for (var spin = 0; spin < 3; spin++) {
         outCome[spin] = Math.floor((Math.random() * 65) + 1);
 
         console.log(outCome[spin]);
         switch (outCome[spin]) {
             case checkRange(outCome[spin], 1, 27):  // 41.5% probability
-                betLine[spin] = "blank";
-                blanks++;
+                betLine[spin] = imgData[0];
+                img1++;
                 break;
             case checkRange(outCome[spin], 28, 37): // 15.4% probability
-                betLine[spin] = "Grapes";
-                grapes++;
+                betLine[spin] = imgData[1];
+                img2++;
                 break;
             case checkRange(outCome[spin], 38, 46): // 13.8% probability
-                betLine[spin] = "Banana";
-                bananas++;
+                betLine[spin] = imgData[2];
+                img3++;
                 break;
             case checkRange(outCome[spin], 47, 54): // 12.3% probability
-                betLine[spin] = "Orange";
-                oranges++;
+                betLine[spin] = imgData[3];
+                img4++;
                 break;
             case checkRange(outCome[spin], 55, 59): //  7.7% probability
-                betLine[spin] = "Cherry";
-                cherries++;
+                betLine[spin] = imgData[4];
+                img5++;
                 break;
             case checkRange(outCome[spin], 60, 62): //  4.6% probability
-                betLine[spin] = "Bar";
-                bars++;
+                betLine[spin] = imgData[5];
+                img6++;
                 break;
-            case checkRange(outCome[spin], 63, 64): //  3.1% probability
-                betLine[spin] = "Bell";
-                bells++;
-                break;
-            case checkRange(outCome[spin], 65, 65): //  1.5% probability
-                betLine[spin] = "Seven";
-                sevens++;
-                break;
+            default: 
+                betLine[spin] = imgData[5];
+                img6++;
+                break;    
         }
     }
     return betLine;
@@ -144,52 +191,44 @@ function Reels() {
 /* This function calculates the player's winnings, if any */
 function determineWinnings()
 {
-    if (blanks == 0)
+    if (blanks === 0)
     {
-        if (grapes == 3) {
+        if (img1 == 3) {
             winnings = playerBet * 10;
         }
-        else if(bananas == 3) {
+        else if(img2 == 3) {
             winnings = playerBet * 20;
         }
-        else if (oranges == 3) {
+        else if (img3 == 3) {
             winnings = playerBet * 30;
         }
-        else if (cherries == 3) {
+        else if (img4 == 3) {
             winnings = playerBet * 40;
         }
-        else if (bars == 3) {
+        else if (img5 == 3) {
             winnings = playerBet * 50;
         }
-        else if (bells == 3) {
+        else if (img6 == 3) {
             winnings = playerBet * 75;
         }
-        else if (sevens == 3) {
-            winnings = playerBet * 100;
-        }
-        else if (grapes == 2) {
+       
+        else if (img1 == 2) {
             winnings = playerBet * 2;
         }
-        else if (bananas == 2) {
+        else if (img2 == 2) {
             winnings = playerBet * 2;
         }
-        else if (oranges == 2) {
+        else if (img3 == 2) {
             winnings = playerBet * 3;
         }
-        else if (cherries == 2) {
+        else if (img4 == 2) {
             winnings = playerBet * 4;
         }
-        else if (bars == 2) {
+        else if (img5 == 2) {
             winnings = playerBet * 5;
         }
-        else if (bells == 2) {
+        else if (img6 == 2) {
             winnings = playerBet * 10;
-        }
-        else if (sevens == 2) {
-            winnings = playerBet * 20;
-        }
-        else if (sevens == 1) {
-            winnings = playerBet * 5;
         }
         else {
             winnings = playerBet * 1;
@@ -204,12 +243,13 @@ function determineWinnings()
     }
     
 }
-
-/* When the player clicks the spin button the game kicks off */
-$("#spinButton").click(function () {
+function spinButton(){
+ console.log("click");
+     //setupStage();
+    setupStage();
     playerBet = $("div#betEntry>input").val();
 
-    if (playerMoney == 0)
+    if (playerMoney === 0)
     {
         if (confirm("You ran out of Money! \nDo you want to play again?")) {
             resetAll();
@@ -224,8 +264,13 @@ $("#spinButton").click(function () {
     }
     else if (playerBet <= playerMoney) {
         spinResult = Reels();
+         for (i = 0; i < 3; i++) {
+            reel = new createjs.Bitmap(spinResult[i].src);
+            reel.x = i * 190;
+            stage.addChild(reel);  
+        }
         fruits = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2];
-        $("div#result>p").text(fruits);
+        //$("div#result>p").text(fruits);
         determineWinnings();
         turn++;
         showPlayerStats();
@@ -233,5 +278,4 @@ $("#spinButton").click(function () {
     else {
         alert("Please enter a valid bet amount");
     }
-    
-});
+}
